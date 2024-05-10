@@ -1,7 +1,7 @@
 <h1 align="center">Modelagem do banco de dados do Edellcation</h1>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O Edellcation é uma Aplicação WEB criada para proporcionar aos funcionários das linhas de montagem um acesso fácil e eficiente a materiais técnicos e manuais de montagem de produtos da empresa, como computadores, servidores e notebooks. A plataforma permite que os funcionários estudem, revisem e acompanhem os processos de montagem de forma individualizada, ao mesmo tempo em que os mantêm atualizados sobre quaisquer alterações nos procedimentos ou inclusão de novos manuais.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O Edellcation é uma Aplicação WEB criada para proporcionar aos funcionários das linhas de montagem o acesso fácil e eficiente a materiais técnicos e manuais de montagem de produtos da empresa, como computadores, servidores e notebooks. A plataforma permite que os funcionários estudem, revisem e acompanhem os processos de montagem de forma individualizada, ao mesmo tempo em que os mantêm atualizados sobre quaisquer alterações nos procedimentos ou inclusão de novos manuais.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Seu banco de dados foi desenvolvido de acordo com a estrutura do SGBD (Sistema de Gerenciamento de Banco de Dados) PostgreSQL no software SQLDesigner
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Seu banco de dados foi desenvolvido de acordo com a estrutura do SGBD (Sistema de Gerenciamento de Banco de Dados) PostgreSQL no software SQLDesigner. De acordo com os últimos 3 encontros com parceiros, entendemos que precisaríamos armazenar diversas informações que poderiam ser agrupadas em: funcionários (employees), manuais (manuals), lista de tarefas (to-do), materiais dos manuais (materials), linhas de montagem (assembly_lines) e produtos (products); a partir disso, já entendemos quais são as entidades do nosso banco de dados, pelo pelos neste primeiro momento, porque sabemos que quando a aplicação amadurecer, vamos cada vez mais aprimorar o banco de dados. Abaixo está o modelo físico com cardinalidade, nulabilidade e tipagem de dados:
 
 <img src="assets/databaseDiagram.png" style="max-width:100%; height:auto;" alt="Diagrama da arquitetura MVC do Edellcation">
 
@@ -9,7 +9,15 @@
 [Diagrama em PDF](assets/databaseDiagram.pdf)</br>
 [Arquivo da Modelagem (XML)](assets/database.xml) 
 
-Por que precisa dessas tabelas e bla bla bla
+## Relacionamentos
+- **Funcionários (1,n) - (1,n) Linha de montagem:** Um Funcionários pode trabalhar em várias linhas de montagem enquanto uma linha de montagem pode conter vários operadores trabalhando.
+- **Funcionários (x,x) - (x,x) Lista de Tarefas:** lorem ipsum bla bla bla
+- **Lista de Tarefas (x,x) - (x,x) Manuais:** lorem ipsum bla bla bla
+- **Manuais (x,x) - (x,x) Materiais:** lorem ipsum bla bla bla
+- **Manuais (x,x) - (x,x) Produtos:** lorem ipsum bla bla bla
+- **Linhas de montagens (x,x) - (x,x) Produtos:** lorem ipsum bla bla bla
+
+Esses relacionamentos foram os pilares sobre os quais construímos nosso banco dados, pilares os quais extraímos do entendimento do negócio do parceiro, sejoa pelos encontros, TAPI, orientaões dos professoures ou deduções. Abaixo está o código funcional testado do banco:
 
 Código SQL:
 ```sql
