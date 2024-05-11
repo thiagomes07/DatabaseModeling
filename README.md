@@ -1,7 +1,10 @@
 <h1 align="center">Modelagem do banco de dados do Edellcation</h1>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O Edellcation é uma Aplicação WEB criada para proporcionar aos funcionários das linhas de montagem o acesso fácil e eficiente a materiais técnicos e manuais de montagem de produtos da empresa, como computadores, servidores e notebooks. A plataforma permite que os funcionários estudem, revisem e acompanhem os processos de montagem de forma individualizada, ao mesmo tempo em que os mantêm atualizados sobre quaisquer alterações nos procedimentos ou inclusão de novos manuais.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Seu banco de dados foi desenvolvido de acordo com a estrutura do SGBD (Sistema de Gerenciamento de Banco de Dados) PostgreSQL no software SQLDesigner. De acordo com os últimos 3 encontros com parceiros, entendemos que precisaríamos armazenar diversas informações que poderiam ser agrupadas em: funcionários (employees), manuais (manuals), lista de tarefas (to-do), materiais dos manuais (materials), linhas de montagem (assembly_lines) e produtos (products); a partir disso, já entendemos quais são as entidades do nosso banco de dados, pelo pelos neste primeiro momento, porque sabemos que quando a aplicação amadurecer, vamos cada vez mais aprimorar o banco de dados. Abaixo está o modelo físico com cardinalidade, nulabilidade e tipagem de dados:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O Edellcation é uma aplicação web desenvolvida para facilitar o acesso dos funcionários das linhas de montagem aos materiais técnicos e manuais de montagem de produtos da empresa, como computadores, servidores e notebooks. A plataforma permite que os funcionários estudem, revisem e acompanhem os processos de montagem de forma personalizada, mantendo-os atualizados sobre quaisquer alterações nos procedimentos ou inclusão de novos manuais.
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Para construir o banco de dados, utilizamos a estrutura do SGBD PostgreSQL no software SQLDesigner. Em seguida, com o código gerado pelo SQLDesigner, criamos um banco de dados real no DBeaver, utilizando um banco PostgreSQL hospedado no render. A partir do DBeaver, extraiu-se o modelo físico do banco.
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Após análises em três encontros com nossos parceiros, identificamos a necessidade de armazenar diversas informações, que foram agrupadas em: funcionários (employees), manuais (manuals), lista de tarefas (to-do), materiais dos manuais (materials), linhas de montagem (assembly_lines) e produtos (products). Essas são as entidades iniciais do nosso banco de dados, com a compreensão de que faremos ajustes e aprimoramentos conforme a aplicação evoluir. Abaixo está o modelo físico com detalhes sobre cardinalidade, nulabilidade e tipagem de dados:
 
 <img src="assets/databaseDiagram.png" style="max-width:100%; height:auto;" alt="Diagrama da arquitetura MVC do Edellcation">
 
@@ -10,14 +13,16 @@
 [Arquivo da Modelagem (XML)](assets/database.xml) 
 
 ## Relacionamentos
-- **Funcionários (1,n) - (1,n) Linha de montagem:** Um Funcionários pode trabalhar em várias linhas de montagem enquanto uma linha de montagem pode conter vários operadores trabalhando.
-- **Funcionários (x,x) - (x,x) Lista de Tarefas:** lorem ipsum bla bla bla
-- **Lista de Tarefas (x,x) - (x,x) Manuais:** lorem ipsum bla bla bla
-- **Manuais (x,x) - (x,x) Materiais:** lorem ipsum bla bla bla
-- **Manuais (x,x) - (x,x) Produtos:** lorem ipsum bla bla bla
-- **Linhas de montagens (x,x) - (x,x) Produtos:** lorem ipsum bla bla bla
+- **Funcionários (employees) (1,n) - (1,n) Linha de montagem (assembly_lines):** Um Funcionários pode trabalhar em várias linhas de montagem enquanto uma linha de montagem pode conter vários operadores trabalhando;
+- **Funcionários (employees) (1,1) - (0,n) Lista de Tarefas (to-do):** Um funcionário pode ter vários afazeres enquanto estes afazeres podem estar relacionados a somente um funcionário;
+- **Lista de Tarefas (to-do) (0,n) - (1,1) Manuais (manuals):** Um afazer tem que possuir no máximo um manual enquanto um manual pode ser relacionado a diversos afazeres;
+- **Manuais (manuals) (1,n) - (0,1) Materiais (materials):** Um manual pode conter no máximo um material enquanto um material também pode ser atribuído em vários manuais;
+- **Manuais (manuals) (1,1) - (1,n) Produtos (products):** Um manual pode ensinar a respeito de diversos produtos enquanto um produto pode ser ensinado em em somento um manual;
+- **Linhas de montagens (assembly_lines) (1,n) - (1,1) Produtos (products):** Uma linha de montagem fabrica no máximo um produto enquanto um produto pode ser fabricado em mais de uma linha de montagem.
 
-Esses relacionamentos foram os pilares sobre os quais construímos nosso banco dados, pilares os quais extraímos do entendimento do negócio do parceiro, sejoa pelos encontros, TAPI, orientaões dos professoures ou deduções. Abaixo está o código funcional testado do banco:
+> **Observação:** Alguns dos relacionamentos mencionados anteriormente podem divergir do modelo conceitual. Isso ocorre porque o DBeaver só consegue gerar com precisão as relações "n", porque estas são mais tangíveis devido à existência das chaves estrangeiras nas tabelas.
+
+Os relacionamentos mencionados foram fundamentais para a construção do nosso banco de dados. Eles foram extraídos do entendimento do negócio do nosso parceiro, seja por meio de encontros, discussões TAPI, orientações dos professores ou deduções. Abaixo, apresentamos o código funcional do banco, já testado.:
 
 Código SQL:
 ```sql
